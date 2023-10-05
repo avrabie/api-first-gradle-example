@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.4'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id "org.openapi.generator" version "6.6.0"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.swagger.parser.v3:swagger-parser-v3:2.1.16'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.4'
+//    if a server stub is needed: interfaceOnly -> false
+//    implementation 'io.swagger.core.v3:swagger-annotations:2.2.15'
+//    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+//    implementation 'javax.validation:validation-api:2.0.1.Final'
+//    implementation 'javax.annotation:jsr250-api:1.0'
+//    implementation 'org.mortbay.jetty:servlet-api-3.0:7.0.0pre2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+openApiGenerate {
+    generatorName.set("spring")
+    inputSpec.set("$rootDir/src/main/resources/catalog-service.yaml")
+//    outputDir.set("$buildDir/generated")
+    outputDir.set("$rootDir/src/main/gen")
+    apiPackage.set("org.openapi.example.api")
+    invokerPackage.set("org.openapi.example.invoker")
+    modelPackage.set("org.openapi.example.model")
+    configOptions.set([
+            dateLibrary   : "java17",
+            interfaceOnly : "true",
+            useSpringBoot3: "true"
+    ])
+}
+
+openApiValidate {
+    inputSpec.set("$rootDir/src/main/resources/catalog-service.yaml")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/java", "src/main/gen/src/main/java"]
+        }
+    }
+}
+//springBoot {
+//    mainClass = "com.example.apifirstgradle1.ApiFirstGradle1Application"
+//}
