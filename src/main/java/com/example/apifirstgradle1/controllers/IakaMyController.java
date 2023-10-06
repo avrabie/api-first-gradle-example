@@ -1,7 +1,8 @@
 package com.example.apifirstgradle1.controllers;
 
-import org.openapi.example.api.BooksApi;
-import org.openapi.example.model.Book;
+
+import com.example.apifirstgradle1.api.BooksApi;
+import com.example.apifirstgradle1.model.Book;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
