@@ -36,14 +36,19 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+// in case of a server stub, there will be 2 main classes, so we need to specify which one to use
+//springBoot {
+//    mainClass = "com.example.apifirstgradle1.ApiFirstGradle1Application"
+//}
+
 openApiGenerate {
     generatorName.set("spring")
     inputSpec.set("$rootDir/src/main/resources/catalog-service.yaml")
 //    outputDir.set("$buildDir/generated")
     outputDir.set("$rootDir/src/main/gen")
-    apiPackage.set("org.openapi.example.api")
-    invokerPackage.set("org.openapi.example.invoker")
-    modelPackage.set("org.openapi.example.model")
+    apiPackage.set("com.example.apifirstgradle1.api")
+    invokerPackage.set("com.example.apifirstgradle1.invoker")
+    modelPackage.set("com.example.apifirstgradle1.model")
     configOptions.set([
             dateLibrary   : "java17",
             interfaceOnly : "true",
@@ -62,6 +67,18 @@ sourceSets {
         }
     }
 }
-//springBoot {
-//    mainClass = "com.example.apifirstgradle1.ApiFirstGradle1Application"
-//}
+
+tasks.register('deleteGeneratedSources') {
+    delete "$rootDir/src/main/gen"
+}
+
+
+
+abstract class GreetingTask extends DefaultTask {
+    @TaskAction
+    def void greet() {
+        println 'Hello, world!'
+    }
+
+}
+tasks.register('greet', GreetingTask)

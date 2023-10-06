@@ -44,7 +44,7 @@ paths:
       operationId: createbook
       summary: Create a book
       description: Creates a new instance of a `book`.
-  '/books/{bookId}':
+  '/books/{isbn}':
     summary: Path used to manage a single book.
     description: >-
       The REST endpoint/path used to get, update, and delete single instances of an `book`.  This path
@@ -53,7 +53,7 @@ paths:
     get:
       parameters:
         -
-          name: bookId
+          name: isbn
           description: A unique identifier for a `book`.
           schema:
             type: string
@@ -94,7 +94,7 @@ paths:
       description: Deletes an existing `book`.
     parameters:
       -
-        name: bookId
+        name: isbn
         description: A unique identifier for a `book`.
         schema:
           type: string
